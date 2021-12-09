@@ -90,3 +90,42 @@ The easiest way to deploy the example to AWS is using [Zappa](https://github.com
 - [x] spark-compliance:rooms_read
 - [x] spark-compliance:webhooks_read
 - [x] spark-compliance:webhooks_write
+7. click **Add Integration**
+8. copy .env_local_sample to .env_local
+9. copy & paste the **Integration ID**, **Client ID** and **Client Secret** to the appropriate variables in the .env_local
+10. copy .env_dev_sample to .env_dev, fill in the same variables as in .env_local
+
+### Run the Application Locally
+All commands should be run relative to the directory into which this example has been downloaded. The commands are valid for Linux/MacOS. Check guides how to create and use Python virtual environment on Windows. 
+1. install docker and docker-compose
+2. start the LocalStack
+```
+docker-compose up
+```
+3. create a Python3 virtual environment and install the required packages
+```
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+4. run the application
+```
+dotenv -f .env_local run python compliance_inspect.py
+```
+The application listens on TCP port 5005.
+5. create a publicly accessible URL
+```
+ngrok http 5005
+```
+
+<img src="./images/hosting_1.png" width="50%">
+
+6. copy the **https** URL from NGROK screen, go back to the Webex Integration, set the **Redirect URI** to
+```
+https://uri_provided_by.ngrok.io/manager
+```
+
+<img src="./images/hosting_2.png" width="50%">
+
+| :zap: multiple Redirect URIs can be set, to the same Integration can be hosted locally and on AWS |
+|-----------------------------------------|
