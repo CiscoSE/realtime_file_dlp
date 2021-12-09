@@ -54,9 +54,10 @@ for at least **spark-compliance:messages_read** and **spark-compliance:messages_
 
 ## How to run the application
 Following steps are needed:
-1. create a Compliance Officer account in [Webex Control Hub](https://admin.webex.com) (admin login required)
-2. create a Webex integration with the proper compliance scope in [Webex for Developers](https://developer.webex.com) (user login required)
-3. host the application locally or in AWS Lambda.
+1. activate Real-time File DLP in Webex Control Hub
+2. create a Compliance Officer account in [Webex Control Hub](https://admin.webex.com) (admin login required)
+3. create a Webex integration with the proper compliance scope in [Webex for Developers](https://developer.webex.com) (user login required)
+4. host the application locally or in AWS Lambda.
 
 Local hosting needs:
 * a runtime environment for [Flask](https://flask.palletsprojects.com)
@@ -67,6 +68,10 @@ AWS Lambda requires an AWS account. Lambda provides 1 million requests and 400,0
 The easiest way to deploy the example to AWS is using [Zappa](https://github.com/zappa/Zappa). [zappa_settings_sample.json](./zappa_settings_sample.json) is provided.
 | :zap: the Zappa settings file includes also a part for LocalStack, but at the time of development it didn't work |
 |-----------------------------------------|
+
+### Activate Real-time File DLP
+Open **Messaging** in [Webex Control Hub](https://admin.webex.com/messaging/settings) and turn on the **Real-time data-loss prevention for files**
+<img src="./images/wch_1.png" width="70%">
 
 ### Create a Compliance Officer account
 1. open Users in the Webex Control Hub
@@ -127,9 +132,10 @@ https://uri_provided_by.ngrok.io/manager
 
 <img src="./images/hosting_2.png" width="70%">
 
-| :zap: multiple Redirect URIs can be set, to the same Integration can be hosted locally and on AWS |
+| :zap: multiple Redirect URIs can be set, so the same Integration can be hosted locally and on AWS |
 |-----------------------------------------|
 7. in a web browser open https://uri_provided_by.ngrok.io/authorize. If all goes well, you should get a Webex login page and the request should be seen both in NGROK and application consoles.
 8. login using a Compliance Officer's e-mail address
 9. successful OAuth Grant Flow finishes at https://uri_provided_by.ngrok.io/authdone with a text  
 **Thank you for providing the authorization. You may close this browser window.**
+10. application is now ready for use, try posting a file in a Webex Space
