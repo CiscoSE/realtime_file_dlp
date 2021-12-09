@@ -14,20 +14,20 @@ Not every cloud service provides the separation of compliance and admin roles.
 
 ## Requirements
 * [Webex Pro Pack](https://help.webex.com/en-US/article/np3c1rm/Pro-Pack-For-Control-Hub) is required to enable the real-time DLP
-* the DLP application has to listen on a URL accessible from public Internet
+* the DLP application has to listen on a URL accessible from the public Internet
 * the DLP application creates a special, so called **org-wide** webhook, for **messages/created** type of events.
 The org-wide webhook is created using Compliance Officer's authorization and with **"ownedBy":"org"** parameter.
 
 The example is designed to run in [AWS Lambda](https://aws.amazon.com/lambda/). In order to run locally, it needs an AWS S3.
-S3 can be provided by [LocalStack](https://localstack.cloud). LocalStack docker image can be spinned using the [docker-compose.yml](./docker-compose.yml) file.
+S3 can be provided by [LocalStack](https://localstack.cloud). LocalStack docker image can be spinned using the provided [docker-compose.yml](./docker-compose.yml) file.
 
 ## How it works
-Following diagram describes how a file is posted and how an external DLP application can intercept its publication in a Space:
+Following diagram describes how a file is posted and how an external DLP application can intercept its publication in a Webex Space:
 
 <img src="./images/arch_1.png" width="70%">
 
-DLP application needs to have its [webhook](https://developer.webex.com/docs/webhooks) URL accessible via public Internet. The webhook receives a HTTP POST from Webex with the list of file URLs.
-The application needs to respond within 10 seconds, otherwise the file is posted in the Space anyway with indication
+DLP application needs to have its [webhook](https://developer.webex.com/docs/webhooks) URL accessible via public Internet. The webhook receives an HTTP POST from Webex with the list of file URLs.
+The application needs to respond within 10 seconds, otherwise the file is posted in the Space anyway with the indication
 that it has not been scanned. The response has to be in a form of HTTP GET or HEAD to the file URL with additional parameter **dlpUnchecked**. For example if the file URL is
 ```
 https://webexapis.com/v1/contents/Y2lzY29zcGFyazovL3VybjpURUFNOnVzLXdlc3QtMl9yL0NPTlRFTlQvNWI1NzAyZjAtMmJhNS0xMWVjLWIyYWUtNmQwNjAwMzBkYTg2LzA?allow=dlpEvaluating
@@ -124,6 +124,7 @@ pip install -r requirements.txt
 dotenv -f .env_local run python compliance_inspect.py
 ```
 The application listens on TCP port 5005.
+
 5. create a publicly accessible URL
 ```
 ngrok http 5005
