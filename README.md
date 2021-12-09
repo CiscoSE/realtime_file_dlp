@@ -1,13 +1,16 @@
 # Webex Real-time File DLP Example
 This is an example of how [Webex Real-time File DLP](https://developer.webex.com/docs/api/guides/webex-real-time-file-dlp-basics) can be used. The DLP allows to scan files posted to Webex Space before they are available for download.
-It's a great improvement, because traditional DLP is reactive, no matter if it's Webex, O365 or Google - file is first
-stored in the cloud service, then scanned by a DLP system and eventually removed. This opens a short window of opportunity
-to download the file. Real-time DLP removes this limitation and reduces the risk of data loss.
+It is a great improvement, because traditional approach to DLP API implementation is reactive, no matter if it is provided by Webex, O365 or Google. A file is first
+stored in the cloud service, after some time it is scanned by a DLP system and then eventually removed by the DLP system. This opens a window of opportunity
+to download the file by any user who can access it. Real-time DLP removes this limitation and reduces the risk of data loss.
 
-This example checks the MIME type of the files and if it doesn't match a regular expression from **ALLOWED_MIME_TYPES_REGEX** variable, it's rejected. In the example, only images are approved. Other more
+This example checks the MIME type of the files and if it doesn't match a regular expression from **ALLOWED_MIME_TYPES_REGEX** variable, it is rejected. In the example, only images are approved. Other more
 sophisticated methods including content scanning can be implemented.
 
 In order to gain access to users' content, the application needs to run with [Compliance](https://developer.webex.com/docs/compliance) Officer's permissions. It runs as an [Integration](https://developer.webex.com/docs/integrations) and implements [OAuth Grant Flow](https://developer.webex.com/blog/real-world-walkthrough-of-building-an-oauth-webex-integration) to securely receive OAuth tokens with just a limited scope that is needed for file scanning.
+
+Webex Compliance Officer role with no admin privileges is a great example of "security from the ground up" approach.
+Not every cloud service provides the separation of compliance and admin roles.
 
 ## Requirements
 * [Webex Pro Pack](https://help.webex.com/en-US/article/np3c1rm/Pro-Pack-For-Control-Hub) is required to enable the real-time DLP
