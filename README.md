@@ -85,7 +85,7 @@ The easiest way to deploy the example to AWS is using [Zappa](https://github.com
 4. click on **Create an Integration**
 5. fill in the required parameters, enter some dummy URL in **Redirect URI**. You will modify it later once you get it from your application hosting.
 6. set scopes:
-[X] spark-compliance:messages_read
+- [x] spark-compliance:messages_read
 * spark-compliance:messages_write
 * spark-compliance:rooms_read
 * spark-compliance:webhooks_read
