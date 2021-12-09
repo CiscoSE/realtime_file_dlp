@@ -73,6 +73,9 @@ The easiest way to deploy the example to AWS is using [Zappa](https://github.com
 Open **Messaging** in [Webex Control Hub](https://admin.webex.com/messaging/settings) and turn on the **Real-time data-loss prevention for files**
 <img src="./images/wch_1.png" width="100%">
 
+| :zap: Webex Pro Pack is required |
+|-----------------------------------------|
+
 ### Create a Compliance Officer account
 1. open Users in the Webex Control Hub
 2. select a user and open **Administrator roles**
@@ -134,8 +137,33 @@ https://uri_provided_by.ngrok.io/manager
 
 | :zap: multiple Redirect URIs can be set, so the same Integration can be hosted locally and on AWS |
 |-----------------------------------------|
-7. in a web browser open https://uri_provided_by.ngrok.io/authorize. If all goes well, you should get a Webex login page and the request should be seen both in NGROK and application consoles.
+7. in a web browser open the https://uri_provided_by.ngrok.io/authorize. If all goes well, you should get a Webex login page and the request should be seen both in NGROK and application consoles.
 8. login using a Compliance Officer's e-mail address
 9. successful OAuth Grant Flow finishes at https://uri_provided_by.ngrok.io/authdone with a text  
 **Thank you for providing the authorization. You may close this browser window.**
 10. application is now ready for use, try posting a file in a Webex Space
+
+### Run the Application on AWS Lambda
+1. create AWS account and install aws cli
+2. set your aws credentials
+3. copy .boto_sample to .boto, set the AWS credentials there
+4. copy zappa_settings_sample.json to zappa_settings.json, no changes should be needed except for **aws_region**
+5. check that you've created .env_dev as mentioned above
+6. deploy the application to AWS lambda
+```
+zappa deploy dev
+```
+7. at the end of the successful deployment an application URL is presented
+
+<img src="./images/hosting_2.png" width="70%">
+
+8. copy the URL and paste it to Webex Integration's Redirect URI. Append **/manager** at the end, so it looks like: https://long_aws_url.amazonaws.com/dev/manager
+9. start monitoring the application using
+```
+zappa tail dev
+```
+10. in a web browser open the https://long_aws_url.amazonaws.com/dev/authorize. If all goes well, you should get a Webex login page and the request should be seen in the application console.
+11. login using a Compliance Officer's e-mail address
+12. successful OAuth Grant Flow finishes at https://long_aws_url.amazonaws.com/dev/authdone with a text  
+**Thank you for providing the authorization. You may close this browser window.**
+13. application is now ready for use, try posting a file in a Webex Space
