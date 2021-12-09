@@ -118,14 +118,18 @@ The application listens on TCP port 5005.
 ngrok http 5005
 ```
 
-<img src="./images/hosting_1.png" width="50%">
+<img src="./images/hosting_1.png" width="70%">
 
 6. copy the **https** URL from NGROK screen, go back to the Webex Integration, set the **Redirect URI** to
 ```
 https://uri_provided_by.ngrok.io/manager
 ```
 
-<img src="./images/hosting_2.png" width="50%">
+<img src="./images/hosting_2.png" width="70%">
 
 | :zap: multiple Redirect URIs can be set, to the same Integration can be hosted locally and on AWS |
 |-----------------------------------------|
+7. in a web browser open https://uri_provided_by.ngrok.io/authorize. If all goes well, you should get a Webex login page and the request should be seen both in NGROK and application consoles.
+8. login using a Compliance Officer's e-mail address
+9. successful OAuth Grant Flow finishes at https://uri_provided_by.ngrok.io/authdone with a text  
+**Thank you for providing the authorization. You may close this browser window.**
