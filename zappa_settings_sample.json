@@ -1,0 +1,63 @@
+{
+  "base": {
+    "app_function": "compliance_inspect.flask_app",
+    "aws_region": "us-east-2",
+    "profile_name": "default",
+    "project_name": "compliance-inspect",
+    "runtime": "python3.9",
+    "memory_size": 192,
+    "timeout_seconds": 130,
+    "keep_warm": true,
+    "keep_warm_expression": "rate(4 minutes)",
+    "payload_compression": false,
+    "payload_minimum_compression_size": 16384,
+    "log_level": "WARNING",
+    "exclude": [
+      "localstack",
+      "log",
+      "shell_example",
+      "token_storage"
+    ]
+  },
+  "dev": {
+    "extends": "base",
+    "s3_bucket": "zappa-compliance-dev",
+    "environment_variables": {
+      "DOT_ENV_FILE": ".env_dev"
+    }
+  },
+  "prod": {
+    "extends": "base",
+    "s3_bucket": "zappa-compliance-prod",
+    "environment_variables": {
+      "DOT_ENV_FILE": ".env_prod"
+    }
+  },
+  "local": {
+    "extends": "base",
+    "profile_name": "localstack",
+    "s3_bucket": "zappa-compliance-1",
+    "endpoint_configuration": "PRIVATE",
+    "touch": false,
+    "aws_endpoint_urls": {
+      "s3": "http://localhost:4566",
+      "logs": "http://localhost:4566",
+      "iam": "http://localhost:4566",
+      "lambda": "http://localhost:4566",
+      "elbv2": "http://localhost:4566",
+      "events": "http://localhost:4566",
+      "apigateway": "http://localhost:4566",
+      "acm": "http://localhost:4566",
+      "cloudwatch": "http://localhost:4566",
+      "route53": "http://localhost:4566",
+      "sns": "http://localhost:4566",
+      "cloudformation": "http://localhost:4566",
+      "dynamodb": "http://localhost:4566",
+      "cognito-idp": "http://localhost:4566",
+      "sts": "http://localhost:4566"
+    },
+    "environment_variables": {
+      "DOT_ENV_FILE": ".env_local"
+    }
+  }
+}
