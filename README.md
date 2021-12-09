@@ -65,5 +65,12 @@ Local hosting needs:
 
 AWS Lambda requires an AWS account. Lambda provides 1 million requests and 400,000 GB-Seconds per month for free. So this example can be hosted at $0 cost for a moderate Webex traffic.
 The easiest way to deploy the example to AWS is using [Zappa](https://github.com/zappa/Zappa). [zappa_settings_sample.json](./zappa_settings_sample.json) is provided.
-| :zap: the Zappa settings file includes also a part for LocalStack, but at the time of development it was failing |
+| :zap: the Zappa settings file includes also a part for LocalStack, but at the time of development it didn't work |
 |-----------------------------------------|
+
+### Create a Compliance Officer account
+1. open Users list in the Webex Control Hub
+2. select a user and open **Administrator roles**
+3. check the **Compliance Officer** role
+4. click **Save**
+<img src="./images/user_1.png" width="30%">
