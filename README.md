@@ -1,11 +1,19 @@
 # Webex Real-time File DLP Example
 This is an example of how [Webex Real-time File DLP](https://developer.webex.com/docs/api/guides/webex-real-time-file-dlp-basics) can be used. The DLP allows to scan files posted to Webex Space before they are available for download.
 It's a great improvement, because traditional DLP is reactive, no matter if it's Webex, O365 or Google - file is first
-stored in the cloud service, then scanned by a DLP system and eventually removed. Real-time DLP removes this limitation and reduces the risk of data loss.
+stored in the cloud service, then scanned by a DLP system and eventually removed. This opens a short window of opportunity
+to download the file. Real-time DLP removes this limitation and reduces the risk of data loss.
 
-This example checks the MIME type of the files and if it doesn't match regular a expression from **ALLOWED_MIME_TYPES_REGEX** variable, it's rejected. In the example, only images are approved.
+This example checks the MIME type of the files and if it doesn't match a regular expression from **ALLOWED_MIME_TYPES_REGEX** variable, it's rejected. In the example, only images are approved. Other more
+sophisticated methods including content scanning can be implemented.
 
 In order to gain access to users' content, the application needs to run with [Compliance](https://developer.webex.com/docs/compliance) Officer's permissions. It runs as an [Integration](https://developer.webex.com/docs/integrations) and implements [OAuth Grant Flow](https://developer.webex.com/blog/real-world-walkthrough-of-building-an-oauth-webex-integration) to securely receive OAuth tokens with just a limited scope that is needed for file scanning.
+
+## Requirements
+* [Webex Pro Pack](https://help.webex.com/en-US/article/np3c1rm/Pro-Pack-For-Control-Hub) is required to enable the real-time DLP
+* the DLP application has to listen on a URL accessible from public Internet
+* the DLP application creates a special, so called **org-wide** webhook, for **messages/created** type of events.
+The org-wide webhook is created using Compliance Officer's authorization and with **"ownedBy":"org"** parameter.
 
 ## How it works
 Following diagram describes how a file is posted and how an external DLP application can intercept its publication in a Space:
@@ -22,6 +30,8 @@ the GET/HEAD should be to
 ```
 https://webexapis.com/v1/contents/Y2lzY29zcGFyazovL3VybjpURUFNOnVzLXdlc3QtMl9yL0NPTlRFTlQvNWI1NzAyZjAtMmJhNS0xMWVjLWIyYWUtNmQwNjAwMzBkYTg2LzA?allow=dlpEvaluating,dlpUnchecked
 ```
+At that moment the Webex application displays a "progress indicator" (a running circle next to the file) which informs
+the sender that the file is being scanned.
 This example is using HTTP HEAD to read the MIME type. It saves time and also doesn't store unwanted copies of users' content.
 HTTP GET can be used to get a full copy of the file and perform scanning of its content. For example for viruses
 or confidential information.
