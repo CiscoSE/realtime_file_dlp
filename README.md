@@ -4,7 +4,9 @@ It's a great improvement, because traditional DLP is reactive, no matter if it's
 stored in the cloud service, then scanned by a DLP system and eventually removed. Real-time DLP removes this limitation and reduces the risk of data loss.
 ## How it works
 Following diagram describes how a file is posted and how an external DLP application can intercept its publication in a Space:
+
 <img src="./images/arch_1.png" width="70%">
+
 DLP application needs to have its [webhook](https://developer.webex.com/docs/webhooks) URL accessible via public Internet. The webhook receives a HTTP POST from Webex with the list of file URLs.
 The application needs to respond within 10 seconds, otherwise the file is posted in the Space anyway with an indication
 that it has not been scanned. The response can be in a form of HTTP GET or HEAD to the file URL with additional parameter
