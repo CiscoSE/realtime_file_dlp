@@ -26,7 +26,7 @@ This example is using HTTP HEAD to read the MIME type. It saves time and also do
 HTTP GET can be used to get a full copy of the file and perform scanning of its content. For example for viruses
 or confidential information.
 
-Once the decision has been made, the DLP application has to respond with HTTP PUT to file URL with parameter **result** with value of **reject** or **approve**. For example:
+Once the decision is made, the DLP application has to respond with HTTP PUT to file URL with parameter **result** with value of **reject** or **approve**. For example:
 ```
 https://webexapis.com/v1/contents/Y2lzY29zcGFyazovL3VybjpURUFNOnVzLXdlc3QtMl9yL0NPTlRFTlQvNWI1NzAyZjAtMmJhNS0xMWVjLWIyYWUtNmQwNjAwMzBkYTg2LzA?result=reject
 ```
