@@ -15,6 +15,9 @@ In order to gain access to users' content, the application needs to run with [Co
 * the DLP application creates a special, so called **org-wide** webhook, for **messages/created** type of events.
 The org-wide webhook is created using Compliance Officer's authorization and with **"ownedBy":"org"** parameter.
 
+The example is designed to run in [AWS Lambda](https://aws.amazon.com/lambda/). In order to run locally, it needs an AWS S3.
+S3 can be provided by [LocalStack](https://localstack.cloud). LocalStack docker image can be spinned using the [docker-compose.yml](./docker-compose.yml) file.
+
 ## How it works
 Following diagram describes how a file is posted and how an external DLP application can intercept its publication in a Space:
 
@@ -26,17 +29,17 @@ that it has not been scanned. The response has to be in a form of HTTP GET or HE
 ```
 https://webexapis.com/v1/contents/Y2lzY29zcGFyazovL3VybjpURUFNOnVzLXdlc3QtMl9yL0NPTlRFTlQvNWI1NzAyZjAtMmJhNS0xMWVjLWIyYWUtNmQwNjAwMzBkYTg2LzA?allow=dlpEvaluating
 ```
-the GET/HEAD should be to
+the GET/HEAD should go to
 ```
 https://webexapis.com/v1/contents/Y2lzY29zcGFyazovL3VybjpURUFNOnVzLXdlc3QtMl9yL0NPTlRFTlQvNWI1NzAyZjAtMmJhNS0xMWVjLWIyYWUtNmQwNjAwMzBkYTg2LzA?allow=dlpEvaluating,dlpUnchecked
 ```
 At that moment the Webex application displays a "progress indicator" (a running circle next to the file) which informs
 the sender that the file is being scanned.
-This example is using HTTP HEAD to read the MIME type. It saves time and also doesn't store unwanted copies of users' content.
+This example is using HTTP HEAD to read the file MIME type. This saves time and also doesn't store unwanted copies of users' content.
 HTTP GET can be used to get a full copy of the file and perform scanning of its content. For example for viruses
 or confidential information.
 
-Once the decision is made, the DLP application has to respond with HTTP PUT to file URL with parameter **result** with value of **reject** or **approve**. For example:
+Once the decision is made, the DLP application has to respond with HTTP PUT to file URL with parameter **result** and value of **reject** or **approve**. For example:
 ```
 https://webexapis.com/v1/contents/Y2lzY29zcGFyazovL3VybjpURUFNOnVzLXdlc3QtMl9yL0NPTlRFTlQvNWI1NzAyZjAtMmJhNS0xMWVjLWIyYWUtNmQwNjAwMzBkYTg2LzA?result=reject
 ```
@@ -48,3 +51,19 @@ https://webexapis.com/v1/contents/Y2lzY29zcGFyazovL3VybjpURUFNOnVzLXdlc3QtMl9yL0
 All the above GET/HEAD/PUT requests have to be authorized by a proper OAuth Access Token. The token has to be issued
 for at least **spark-compliance:messages_read** and **spark-compliance:messages_write** scopes. The example uses also
 **spark-compliance:rooms_read, spark-compliance:webhooks_read, spark-compliance:webhooks_write** (see **FILES_COMPLIANCE_SCOPE** variable) in order to manage the webhook and get information about the Space.
+
+## How to run the application
+Following steps are needed:
+1. create a Compliance Officer account in [Webex Control Hub](https://admin.webex.com) (admin login required)
+2. create a Webex integration with the proper compliance scope in [Webex for Developers](https://developer.webex.com) (user login required)
+3. host the application locally or in AWS Lambda.
+
+Local hosting needs:
+* a runtime environment for [Flask](https://flask.palletsprojects.com)
+* AWS S3 - a [docker-compose.yml](./docker-compose.yml) for spinning the LocalStack docker image is provided
+* some way to provide a publicly accessible URL, for example [NGROK](https://ngrok.com)
+
+AWS Lambda requires an AWS account. Lambda provides 1 million requests and 400,000 GB-Seconds per month for free. So this example can be hosted at $0 cost for a moderate Webex traffic.
+The easiest way to deploy the example to AWS is using [Zappa](https://github.com/zappa/Zappa). [zappa_settings_sample.json](./zappa_settings_sample.json) is provided.
+| :zap: the Zappa settings file includes also a part for LocalStack, but at the time of development it was failing |
+|-----------------------------------------|
