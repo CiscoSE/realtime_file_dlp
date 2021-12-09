@@ -155,9 +155,12 @@ zappa deploy dev
 ```
 7. at the end of the successful deployment an application URL is presented
 
-<img src="./images/hosting_2.png" width="70%">
+<img src="./images/hosting_3.png" width="70%">
 
 8. copy the URL and paste it to Webex Integration's Redirect URI. Append **/manager** at the end, so it looks like: https://long_aws_url.amazonaws.com/dev/manager
+
+<img src="./images/hosting_2.png" width="70%">
+
 9. start monitoring the application using
 ```
 zappa tail dev
