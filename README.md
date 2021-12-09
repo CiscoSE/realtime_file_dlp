@@ -71,7 +71,7 @@ The easiest way to deploy the example to AWS is using [Zappa](https://github.com
 
 ### Activate Real-time File DLP
 Open **Messaging** in [Webex Control Hub](https://admin.webex.com/messaging/settings) and turn on the **Real-time data-loss prevention for files**
-<img src="./images/wch_1.png" width="70%">
+<img src="./images/wch_1.png" width="100%">
 
 ### Create a Compliance Officer account
 1. open Users in the Webex Control Hub
