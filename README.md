@@ -78,12 +78,14 @@ The easiest way to deploy the example to AWS is using [Zappa](https://github.com
 ### Create a Webex Integration
 1. login to [Webex for Developers](https://developer.webex.com)
 2. click on your user's icon in the upper right corner and then on **My Webex Apps**
+
 <img src="./images/user_2.png" width="30%">
+
 3. click on **Create a New App**
 4. click on **Create an Integration**
 5. fill in the required parameters, enter some dummy URL in **Redirect URI**. You will modify it later once you get it from your application hosting.
 6. set scopes:
-[x] spark-compliance:messages_read
+* spark-compliance:messages_read
 * spark-compliance:messages_write
 * spark-compliance:rooms_read
 * spark-compliance:webhooks_read
