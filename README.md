@@ -4,7 +4,7 @@ It is a great improvement, because traditional approach to DLP API implementatio
 stored in the cloud service, after some time it is scanned by a DLP system and then eventually removed by the DLP system. This opens a window of opportunity
 to download the file by any user who can access it. Real-time DLP removes this limitation and reduces the risk of data loss.
 
-This example checks the MIME type of the files and if it doesn't match a regular expression from **ALLOWED_MIME_TYPES_REGEX** variable, it is rejected. In the example, only images are approved. Other more
+This example checks the MIME type of the file and if it doesn't match a regular expression from **ALLOWED_MIME_TYPES_REGEX** variable, it is rejected. In the example, only images are approved. Other more
 sophisticated methods including content scanning can be implemented.
 
 In order to gain access to users' content, the application needs to run with [Compliance](https://developer.webex.com/docs/compliance) Officer's permissions. It runs as an [Integration](https://developer.webex.com/docs/integrations) and implements [OAuth Grant Flow](https://developer.webex.com/blog/real-world-walkthrough-of-building-an-oauth-webex-integration) to securely receive OAuth tokens with just a limited scope that is needed for file scanning.
@@ -174,3 +174,6 @@ zappa tail dev
 12. successful OAuth Grant Flow finishes at https://long_aws_url.amazonaws.com/dev/authdone with a text  
 **Thank you for providing the authorization. You may close this browser window.**
 13. application is now ready for use, try posting a file in a Webex Space
+
+## Credits
+Thanks to Ralf Schiffert raschiff@cisco.com for evangelization and providing sample shell scripts which demonstrate the functionality.
