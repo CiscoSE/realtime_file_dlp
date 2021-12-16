@@ -365,7 +365,7 @@ def refresh_tokens_for_key(token_key):
     tokens = get_tokens_for_key(token_key)
     client_id = os.getenv("WEBEX_INTEGRATION_CLIENT_ID")
     client_secret = os.getenv("WEBEX_INTEGRATION_CLIENT_SECRET")
-    integration_api = WebexTeamsAPI()
+    integration_api = WebexTeamsAPI(access_token="12345")
     try:
         new_tokens = AccessTokenAbs(integration_api.access_tokens.refresh(client_id, client_secret, tokens.refresh_token).json_data)
         save_tokens(token_key, new_tokens)
